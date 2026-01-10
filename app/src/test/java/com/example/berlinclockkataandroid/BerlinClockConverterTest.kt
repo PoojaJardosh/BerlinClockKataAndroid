@@ -35,4 +35,11 @@ class BerlinClockConverterTest {
         val output = converter.convert("10:00:00")
         assertEquals("RROO", output.substringAfter("\n"))
     }
+
+    @Test
+    fun `convert returns correct 5-hour row for 15 to 19 hours`() {
+        // 15 hours -> 15/5 = 3 lamps
+        val output = converter.convert("15:00:00")
+        assertEquals("RRRO", output.substringAfter("\n"))
+    }
 }
