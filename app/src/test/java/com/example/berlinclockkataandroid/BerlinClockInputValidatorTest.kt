@@ -49,4 +49,9 @@ class BerlinClockInputValidatorTest {
     fun `isValid returns true for midnight`() {
         assertTrue(validator.isValid("00:00:00"))
     }
+
+    @Test
+    fun `isValid returns true for end of day`() {
+        assertTrue(validator.isValid("23:59:59"))
+    }
 }
