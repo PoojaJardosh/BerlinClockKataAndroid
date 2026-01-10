@@ -9,7 +9,8 @@ class BerlinClockConverter {
 
         return buildString {
             append(if (s % 2 == 0) "Y" else "O").append("\n")
-            append(generateRow(h / 5, 4, 'R'))
+            append(generateRow(h / 5, 4, 'R')).append("\n")
+            append(generateRow(h % 5, 4, 'R')).append("\n")
         }
     }
     private fun generateRow(litCount: Int, totalLamps: Int, onChar: Char): String {

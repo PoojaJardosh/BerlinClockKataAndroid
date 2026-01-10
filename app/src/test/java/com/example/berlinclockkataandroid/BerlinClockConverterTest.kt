@@ -57,6 +57,19 @@ class BerlinClockConverterTest {
         assertEquals("RRRR", getRow(1, "23:59:59"))
     }
 
+    // --- ROW 3: ONE HOUR ROW (Bottom Red Row) ---
+    // Logic: Remainder of hours % 5. Max 4 lamps.
+
+    @Test
+    fun `convert returns correct 1-hour row for exact multiples of 5`() {
+        // 0, 5, 10, 15, 20 hours -> Remainder 0
+        assertEquals("OOOO", getRow(2, "00:00:00"))
+        assertEquals("OOOO", getRow(2, "05:00:00"))
+        assertEquals("OOOO", getRow(2, "10:00:00"))
+        assertEquals("OOOO", getRow(2, "15:00:00"))
+        assertEquals("OOOO", getRow(2, "20:00:00"))
+    }
+
     // --- HELPER FUNCTION ---
     private fun getRow(index: Int, time: String): String {
         val output = converter.convert(time)
