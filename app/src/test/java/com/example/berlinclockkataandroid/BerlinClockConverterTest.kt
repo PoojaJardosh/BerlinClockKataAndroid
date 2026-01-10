@@ -20,4 +20,12 @@ class BerlinClockConverterTest {
         assertEquals("O", output.substringBefore("\n"))
     }
 
+    // --- ROW 2: FIVE HOUR ROW (Top Red Row) ---
+    // Logic: 1 lamp for every 5 hours. Max 4 lamps.
+    @Test
+    fun `convert returns correct 5-hour row for 00 to 04 hours`() {
+        // 0 hours -> 0/5 = 0 lamps
+        val output = converter.convert("04:00:00")
+        assertEquals("OOOO", output.substringAfter("\n"))
+    }
 }
