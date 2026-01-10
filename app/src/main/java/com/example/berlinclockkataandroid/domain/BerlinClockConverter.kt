@@ -12,6 +12,7 @@ class BerlinClockConverter {
             append(generateRow(h / 5, 4, 'R')).append("\n")
             append(generateRow(h % 5, 4, 'R')).append("\n")
             append(generateFiveMinuteRow(m / 5)).append("\n")
+            append(generateRow(m % 5, 4, 'Y'))
         }
     }
     private fun generateRow(litCount: Int, totalLamps: Int, onChar: Char): String {

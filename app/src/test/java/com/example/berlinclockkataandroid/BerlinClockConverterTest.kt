@@ -156,6 +156,17 @@ class BerlinClockConverterTest {
         assertEquals("YYRYYRYYRYY", getRow(3, "00:55:00"))
     }
 
+    // --- ROW 4: ONE MINUTE ROW (Bottom Yellow Row) ---
+    // Logic: Remainder of minutes % 5. Max 4 lamps. All Yellow (Y).
+
+    @Test
+    fun `convert returns correct 1-minute row for exact multiples of 5`() {
+        // 0, 5, ... 55 mins -> Remainder 0
+        assertEquals("OOOO", getRow(4, "00:00:00"))
+        assertEquals("OOOO", getRow(4, "00:15:00"))
+        assertEquals("OOOO", getRow(4, "00:30:00"))
+    }
+
     // --- HELPER FUNCTION ---
     private fun getRow(index: Int, time: String): String {
         val output = converter.convert(time)
