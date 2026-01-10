@@ -33,4 +33,10 @@ class BerlinClockInputValidatorTest {
         assertFalse(validator.isValid("12-56-00"))
         assertFalse(validator.isValid("12 56 00"))
     }
+
+    @Test
+    fun `isValid returns false for single digit format without padding`() {
+        // The requirement specifies 'hh:mm:ss' which implies "01" not "1"
+        assertFalse(validator.isValid("1:2:3"))
+    }
 }
