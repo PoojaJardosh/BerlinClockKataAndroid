@@ -27,4 +27,10 @@ class BerlinClockInputValidatorTest {
     fun `isValid returns false for missing seconds segment`() {
         assertFalse(validator.isValid("12:00"))
     }
+
+    @Test
+    fun `isValid returns false for wrong separator`() {
+        assertFalse(validator.isValid("12-56-00"))
+        assertFalse(validator.isValid("12 56 00"))
+    }
 }
