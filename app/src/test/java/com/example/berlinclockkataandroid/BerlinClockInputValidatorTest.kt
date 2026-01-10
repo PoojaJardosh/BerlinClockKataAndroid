@@ -22,4 +22,9 @@ class BerlinClockInputValidatorTest {
     fun `isValid returns false for non-numeric characters`() {
         assertFalse(validator.isValid("12:00:xx"))
     }
+
+    @Test
+    fun `isValid returns false for missing seconds segment`() {
+        assertFalse(validator.isValid("12:00"))
+    }
 }
