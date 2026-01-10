@@ -25,28 +25,42 @@ class BerlinClockConverterTest {
     @Test
     fun `convert returns correct 5-hour row for 00 to 04 hours`() {
         // 0 hours -> 0/5 = 0 lamps
-        val output = converter.convert("04:00:00")
-        assertEquals("OOOO", output.substringAfter("\n"))
+        assertEquals("OOOO", getRow(1, "00:00:00"))
+        assertEquals("OOOO", getRow(1, "04:59:59"))
+    }
+
+    @Test
+    fun `convert returns correct 5-hour row for 05 to 09 hours`() {
+        // 5 hours -> 5/5 = 1 lamp
+        assertEquals("ROOO", getRow(1, "05:00:00"))
+        assertEquals("ROOO", getRow(1, "09:59:59"))
     }
 
     @Test
     fun `convert returns correct 5-hour row for 10 to 14 hours`() {
         // 10 hours -> 10/5 = 2 lamps
-        val output = converter.convert("10:00:00")
-        assertEquals("RROO", output.substringAfter("\n"))
+        assertEquals("ROOO", getRow(1, "05:00:00"))
+        assertEquals("ROOO", getRow(1, "09:59:59"))
     }
 
     @Test
     fun `convert returns correct 5-hour row for 15 to 19 hours`() {
         // 15 hours -> 15/5 = 3 lamps
-        val output = converter.convert("15:00:00")
-        assertEquals("RRRO", output.substringAfter("\n"))
+        assertEquals("RROO", getRow(1, "10:00:00"))
+        assertEquals("RROO", getRow(1, "14:59:59"))
     }
 
     @Test
     fun `convert returns correct 5-hour row for 20 to 23 hours`() {
         // 20 hours -> 20/5 = 4 lamps (Max)
-        val output = converter.convert("20:00:00")
-        assertEquals("RRRR", output.substringAfter("\n"))
+        assertEquals("RRRR", getRow(1, "20:00:00"))
+        assertEquals("RRRR", getRow(1, "23:59:59"))
+    }
+
+    // --- HELPER FUNCTION ---
+    private fun getRow(index: Int, time: String): String {
+        val output = converter.convert(time)
+        val rows = output.split("\n")
+        return if (rows.size > index) rows[index] else ""
     }
 }
