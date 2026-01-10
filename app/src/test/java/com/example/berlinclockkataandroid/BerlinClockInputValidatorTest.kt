@@ -39,4 +39,9 @@ class BerlinClockInputValidatorTest {
         // The requirement specifies 'hh:mm:ss' which implies "01" not "1"
         assertFalse(validator.isValid("1:2:3"))
     }
+
+    @Test
+    fun `isValid returns true for standard valid time`() {
+        assertTrue(validator.isValid("12:56:01"))
+    }
 }
