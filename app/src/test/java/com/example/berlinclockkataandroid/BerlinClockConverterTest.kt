@@ -181,6 +181,13 @@ class BerlinClockConverterTest {
         assertEquals("YYOO", getRow(4, "00:07:00"))
     }
 
+    @Test
+    fun `convert returns correct 1-minute row for remainder 3`() {
+        // 3, 8, 13... mins
+        assertEquals("YYYO", getRow(4, "00:03:00"))
+        assertEquals("YYYO", getRow(4, "00:08:00"))
+    }
+
     // --- HELPER FUNCTION ---
     private fun getRow(index: Int, time: String): String {
         val output = converter.convert(time)
