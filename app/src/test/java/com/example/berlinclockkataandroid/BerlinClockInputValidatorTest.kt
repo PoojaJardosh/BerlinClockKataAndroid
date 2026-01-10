@@ -8,6 +8,7 @@ import org.junit.Test
 class BerlinClockInputValidatorTest {
     private val validator = BerlinClockInputValidator()
 
+    // --- FORMAT CHECKS (Structure Violations) ---
     @Test
     fun `isValid returns true for non-empty string`() {
         assertTrue(validator.isValid("12:56:01"))
@@ -40,6 +41,7 @@ class BerlinClockInputValidatorTest {
         assertFalse(validator.isValid("1:2:3"))
     }
 
+    // --- HAPPY PATH (Valid Inputs) ---
     @Test
     fun `isValid returns true for standard valid time`() {
         assertTrue(validator.isValid("12:56:01"))
@@ -55,6 +57,7 @@ class BerlinClockInputValidatorTest {
         assertTrue(validator.isValid("23:59:59"))
     }
 
+    // --- BOUNDARY CHECKS (Logic Violations) ---
     @Test
     fun `isValid returns false when hour is 24 or greater`() {
         assertFalse(validator.isValid("24:00:00"))
