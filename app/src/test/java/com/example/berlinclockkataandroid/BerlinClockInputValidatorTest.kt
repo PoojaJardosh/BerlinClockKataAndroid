@@ -17,4 +17,9 @@ class BerlinClockInputValidatorTest {
     fun `isValid returns false for empty string`() {
         assertFalse(validator.isValid(""))
     }
+
+    @Test
+    fun `isValid returns false for non-numeric characters`() {
+        assertFalse(validator.isValid("12:00:xx"))
+    }
 }
