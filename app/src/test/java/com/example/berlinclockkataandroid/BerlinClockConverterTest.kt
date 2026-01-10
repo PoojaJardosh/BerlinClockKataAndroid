@@ -101,6 +101,17 @@ class BerlinClockConverterTest {
         assertEquals("RRRR", getRow(2, "19:00:00"))
     }
 
+    // --- ROW 3: FIVE MINUTE ROW (The Complex 11-Lamp Row) ---
+    // Logic: 1 lamp per 5 mins. Max 11 lamps.
+    // Color Rule: 3rd, 6th, 9th lamps are RED (R). All others YELLOW (Y).
+
+    @Test
+    fun `convert returns correct 5-minute row for 00 to 04 minutes`() {
+        // 0 mins -> 0 lamps
+        assertEquals("OOOOOOOOOOO", getRow(3, "00:00:00"))
+        assertEquals("OOOOOOOOOOO", getRow(3, "00:04:00"))
+    }
+
     // --- HELPER FUNCTION ---
     private fun getRow(index: Int, time: String): String {
         val output = converter.convert(time)
