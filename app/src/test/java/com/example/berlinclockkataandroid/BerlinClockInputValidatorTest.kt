@@ -60,4 +60,9 @@ class BerlinClockInputValidatorTest {
         assertFalse(validator.isValid("24:00:00"))
         assertFalse(validator.isValid("25:00:00"))
     }
+
+    @Test
+    fun `isValid returns false when minutes are 60 or greater`() {
+        assertFalse(validator.isValid("12:60:00"))
+    }
 }
