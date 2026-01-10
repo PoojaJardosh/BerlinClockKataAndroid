@@ -112,6 +112,14 @@ class BerlinClockConverterTest {
         assertEquals("OOOOOOOOOOO", getRow(3, "00:04:00"))
     }
 
+    @Test
+    fun `convert returns correct 5-minute row for 05 to 14 minutes (Yellows only)`() {
+        // 5 mins -> 1 lamp (Y)
+        assertEquals("YOOOOOOOOOO", getRow(3, "00:05:00"))
+        // 10 mins -> 2 lamps (YY)
+        assertEquals("YYOOOOOOOOO", getRow(3, "00:10:00"))
+    }
+
     // --- HELPER FUNCTION ---
     private fun getRow(index: Int, time: String): String {
         val output = converter.convert(time)
