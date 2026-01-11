@@ -49,4 +49,26 @@ class BerlinClockViewModelTest {
         // Verify interactions
         verify { converter.convert(validTime) }
     }
+
+    @Test
+    fun `processTimeInput emits Error state when input is invalid`() = runTest {
+        // Arrange
+        val invalidTime = "25:00:00"
+
+        // Mock failure behavior
+        coEvery { validator.isValid(invalidTime) } returns false
+
+        viewModel = BerlinClockViewModel(validator, converter)
+
+        // Act
+        viewModel.processTimeInput(invalidTime)
+
+        // Assert
+        val currentState = viewModel.uiState.value
+        assert(currentState is BerlinClockUiState.Error)
+        assertEquals("Invalid time format. Please use HH:mm:ss", (currentState as BerlinClockUiState.Error).message)
+
+        // Verify converter was NOT called
+        verify(exactly = 0) { converter.convert(any()) }
+    }
 }
