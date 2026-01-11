@@ -9,6 +9,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -36,7 +37,7 @@ fun BerlinClockScreen(
     onConvertClick: (String) -> Unit
 ){
     var timeInput by rememberSaveable { mutableStateOf("") }
-
+    val keyboardController = LocalSoftwareKeyboardController.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,7 +55,10 @@ fun BerlinClockScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = {onConvertClick(timeInput)},
+            onClick = {
+                keyboardController?.hide()
+                onConvertClick(timeInput)
+                      },
             modifier = Modifier.fillMaxWidth(),
             enabled = uiState !is BerlinClockUiState.Loading
         ) {
