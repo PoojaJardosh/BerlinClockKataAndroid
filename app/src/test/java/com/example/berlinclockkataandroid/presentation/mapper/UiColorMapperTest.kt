@@ -79,4 +79,12 @@ class UiColorMapperTest {
 
         assertEquals(expected, UiColorMapper.map(input))
     }
+
+    @Test
+    fun `should handle single character string`() {
+        val input = "R"
+        val expected = listOf(BerlinColor.RED)
+
+        assertEquals(expected, UiColorMapper.map(input))
+    }
 }
