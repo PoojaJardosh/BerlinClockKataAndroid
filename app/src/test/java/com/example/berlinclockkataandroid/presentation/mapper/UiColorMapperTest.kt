@@ -87,4 +87,17 @@ class UiColorMapperTest {
 
         assertEquals(expected, UiColorMapper.map(input))
     }
+
+    @Test
+    fun `should default invalid characters to OFF`() {
+        val input = "RXZO"
+        val expected = listOf(
+            BerlinColor.RED,
+            BerlinColor.OFF,
+            BerlinColor.OFF,
+            BerlinColor.OFF
+        )
+
+        assertEquals(expected, UiColorMapper.map(input))
+    }
 }
