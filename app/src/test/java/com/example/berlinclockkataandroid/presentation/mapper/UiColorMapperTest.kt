@@ -72,4 +72,11 @@ class UiColorMapperTest {
         assertEquals(expected, UiColorMapper.map(input))
     }
 
+    @Test
+    fun `should return empty list for empty string`() {
+        val input = ""
+        val expected = emptyList<BerlinColor>()
+
+        assertEquals(expected, UiColorMapper.map(input))
+    }
 }
