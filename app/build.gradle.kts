@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.berlinclockkataandroid"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -68,5 +68,6 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     testImplementation(libs.app.cash.turbine)
     testImplementation(libs.kotlin.test)
+    testImplementation(kotlin("reflect"))
 
 }
