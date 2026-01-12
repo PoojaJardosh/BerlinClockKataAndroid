@@ -66,4 +66,5 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
     implementation(libs.androidx.hilt.navigation.compose)
+    testImplementation(libs.app.cash.turbine)
 }

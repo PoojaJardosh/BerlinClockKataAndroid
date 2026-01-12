@@ -1,7 +1,7 @@
 package com.example.berlinclockkataandroid.presentation
 
 data class BerlinClockState(
-    val secondsLamp: Boolean = false,
+    val secondsLamp: String = "O",
     val fiveHourRow: String = "OOOO",
     val oneHourRow: String = "OOOO",
     val fiveMinuteRow: String = "OOOOOOOOOOO",
