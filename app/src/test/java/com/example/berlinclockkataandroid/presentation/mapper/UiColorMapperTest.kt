@@ -31,4 +31,17 @@ class UiColorMapperTest {
         assertEquals(expected, UiColorMapper.map(input))
     }
 
+    @Test
+    fun `should map 'O' character to OFF color`() {
+        val input = "OOOO"
+        val expected = listOf(
+            BerlinColor.OFF,
+            BerlinColor.OFF,
+            BerlinColor.OFF,
+            BerlinColor.OFF
+        )
+
+        assertEquals(expected, UiColorMapper.map(input))
+    }
+
 }
