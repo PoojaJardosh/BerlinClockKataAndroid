@@ -100,4 +100,18 @@ class UiColorMapperTest {
 
         assertEquals(expected, UiColorMapper.map(input))
     }
+
+    @Test
+    fun `should be case-sensitive (lowercase maps to OFF)`() {
+        // Unless logic changes to ignoreCase, strict mapping requires uppercase
+        val input = "rRyY"
+        val expected = listOf(
+            BerlinColor.OFF,    // r -> OFF
+            BerlinColor.RED,    // R -> RED
+            BerlinColor.OFF,    // y -> OFF
+            BerlinColor.YELLOW  // Y -> YELLOW
+        )
+
+        assertEquals(expected, UiColorMapper.map(input))
+    }
 }
