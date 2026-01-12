@@ -44,4 +44,18 @@ class UiColorMapperTest {
         assertEquals(expected, UiColorMapper.map(input))
     }
 
+    @Test
+    fun `should map mixed valid string (R, Y, O) correctly`() {
+        // 5-minute row pattern: Yellow, Yellow, Red, Off
+        val input = "YYRO"
+        val expected = listOf(
+            BerlinColor.YELLOW,
+            BerlinColor.YELLOW,
+            BerlinColor.RED,
+            BerlinColor.OFF
+        )
+
+        assertEquals(expected, UiColorMapper.map(input))
+    }
+
 }
