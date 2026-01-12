@@ -67,4 +67,6 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     implementation(libs.androidx.hilt.navigation.compose)
     testImplementation(libs.app.cash.turbine)
+    testImplementation(libs.kotlin.test)
+
 }

@@ -22,7 +22,6 @@ class BerlinClockConverter {
         val totalLamps = 11
         return (1..totalLamps).joinToString("") { index ->
             if (index <= litCount) {
-                // Every 3rd lamp (3, 6, 9) is Red, others Yellow
                 if (index % 3 == 0) "R" else "Y"
             } else {
                 "O"

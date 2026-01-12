@@ -1,6 +1,5 @@
 package com.example.berlinclockkataandroid.presentation.mapper
-
-import junit.framework.TestCase.assertEquals
+import kotlin.test.assertEquals
 import org.junit.Test
 
 class UiColorMapperTest {

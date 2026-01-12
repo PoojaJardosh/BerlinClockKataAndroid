@@ -6,5 +6,6 @@ data class BerlinClockState(
     val oneHourRow: String = "OOOO",
     val fiveMinuteRow: String = "OOOOOOOOOOO",
     val oneMinuteRow: String = "OOOO",
-    val digitalTime: String = "00:00:00"
+    val digitalTime: String = "00:00:00",
+    val birlinClockString: String = ""
 )

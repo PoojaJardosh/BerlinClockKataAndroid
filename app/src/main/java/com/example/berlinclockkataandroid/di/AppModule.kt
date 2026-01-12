@@ -12,6 +12,8 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideConverter(): BerlinClockConverter = BerlinClockConverter()
+    fun provideConverter(): BerlinClockConverter {
+        return BerlinClockConverter()
+    }
 
 }

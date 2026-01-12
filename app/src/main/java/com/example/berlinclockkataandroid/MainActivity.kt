@@ -10,7 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.berlinclockkataandroid.ui.clock.BerlinClockRoute
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockScreen
 import com.example.berlinclockkataandroid.ui.theme.BerlinClockKataAndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                     ) {
-                    BerlinClockRoute()
+                    BerlinClockScreen()
                 }
             }
         }
