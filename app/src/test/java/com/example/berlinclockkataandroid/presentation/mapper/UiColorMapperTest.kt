@@ -58,4 +58,18 @@ class UiColorMapperTest {
         assertEquals(expected, UiColorMapper.map(input))
     }
 
+    @Test
+    fun `should map complex long pattern correctly`() {
+        // Full 11-lamp row: YYR YYR YYR YY
+        val input = "YYRYYRYYRYY"
+        val expected = listOf(
+            BerlinColor.YELLOW, BerlinColor.YELLOW, BerlinColor.RED,
+            BerlinColor.YELLOW, BerlinColor.YELLOW, BerlinColor.RED,
+            BerlinColor.YELLOW, BerlinColor.YELLOW, BerlinColor.RED,
+            BerlinColor.YELLOW, BerlinColor.YELLOW
+        )
+
+        assertEquals(expected, UiColorMapper.map(input))
+    }
+
 }
