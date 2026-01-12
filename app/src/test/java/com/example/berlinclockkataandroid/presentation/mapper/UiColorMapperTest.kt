@@ -114,4 +114,16 @@ class UiColorMapperTest {
 
         assertEquals(expected, UiColorMapper.map(input))
     }
+
+    @Test
+    fun `should map numbers to OFF`() {
+        val input = "123"
+        val expected = listOf(
+            BerlinColor.OFF,
+            BerlinColor.OFF,
+            BerlinColor.OFF
+        )
+
+        assertEquals(expected, UiColorMapper.map(input))
+    }
 }
