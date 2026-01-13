@@ -20,49 +20,38 @@ class BerlinClockConverterTest {
         assertEquals("O", output.substringBefore("\n"))
     }
 
-    // --- ROW 2: FIVE HOUR ROW (Top Red Row) ---
-    // Logic: 1 lamp for every 5 hours. Max 4 lamps.
     @Test
     fun `convert returns correct 5-hour row for 00 to 04 hours`() {
-        // 0 hours -> 0/5 = 0 lamps
         assertEquals("OOOO", getRow(1, "00:00:00"))
         assertEquals("OOOO", getRow(1, "04:59:59"))
     }
 
     @Test
     fun `convert returns correct 5-hour row for 05 to 09 hours`() {
-        // 5 hours -> 5/5 = 1 lamp
         assertEquals("ROOO", getRow(1, "05:00:00"))
         assertEquals("ROOO", getRow(1, "09:59:59"))
     }
 
     @Test
     fun `convert returns correct 5-hour row for 10 to 14 hours`() {
-        // 10 hours -> 10/5 = 2 lamps
-        assertEquals("ROOO", getRow(1, "05:00:00"))
-        assertEquals("ROOO", getRow(1, "09:59:59"))
+        assertEquals("RROO", getRow(1, "10:00:00"))
+        assertEquals("RROO", getRow(1, "13:59:59"))
     }
 
     @Test
     fun `convert returns correct 5-hour row for 15 to 19 hours`() {
-        // 15 hours -> 15/5 = 3 lamps
         assertEquals("RROO", getRow(1, "10:00:00"))
         assertEquals("RROO", getRow(1, "14:59:59"))
     }
 
     @Test
     fun `convert returns correct 5-hour row for 20 to 23 hours`() {
-        // 20 hours -> 20/5 = 4 lamps (Max)
         assertEquals("RRRR", getRow(1, "20:00:00"))
         assertEquals("RRRR", getRow(1, "23:59:59"))
     }
 
-    // --- ROW 3: ONE HOUR ROW (Bottom Red Row) ---
-    // Logic: Remainder of hours % 5. Max 4 lamps.
-
     @Test
     fun `convert returns correct 1-hour row for exact multiples of 5`() {
-        // 0, 5, 10, 15, 20 hours -> Remainder 0
         assertEquals("OOOO", getRow(2, "00:00:00"))
         assertEquals("OOOO", getRow(2, "05:00:00"))
         assertEquals("OOOO", getRow(2, "10:00:00"))
@@ -72,7 +61,6 @@ class BerlinClockConverterTest {
 
     @Test
     fun `convert returns correct 1-hour row for remainder 1`() {
-        // 1, 6, 11, 16, 21 hours
         assertEquals("ROOO", getRow(2, "01:00:00"))
         assertEquals("ROOO", getRow(2, "06:00:00"))
         assertEquals("ROOO", getRow(2, "11:00:00"))
@@ -82,7 +70,6 @@ class BerlinClockConverterTest {
 
     @Test
     fun `convert returns correct 1-hour row for remainder 2`() {
-        // 2, 7, 12, 17, 22 hours
         assertEquals("RROO", getRow(2, "02:00:00"))
         assertEquals("RROO", getRow(2, "22:00:00"))
     }
@@ -96,72 +83,52 @@ class BerlinClockConverterTest {
 
     @Test
     fun `convert returns correct 1-hour row for remainder 4 (Full Row)`() {
-        // 4, 9, 14, 19 hours
         assertEquals("RRRR", getRow(2, "04:00:00"))
         assertEquals("RRRR", getRow(2, "19:00:00"))
     }
 
-    // --- ROW 3: FIVE MINUTE ROW (The Complex 11-Lamp Row) ---
-    // Logic: 1 lamp per 5 mins. Max 11 lamps.
-    // Color Rule: 3rd, 6th, 9th lamps are RED (R). All others YELLOW (Y).
-
     @Test
     fun `convert returns correct 5-minute row for 00 to 04 minutes`() {
-        // 0 mins -> 0 lamps
         assertEquals("OOOOOOOOOOO", getRow(3, "00:00:00"))
         assertEquals("OOOOOOOOOOO", getRow(3, "00:04:00"))
     }
 
     @Test
     fun `convert returns correct 5-minute row for 05 to 14 minutes (Yellows only)`() {
-        // 5 mins -> 1 lamp (Y)
         assertEquals("YOOOOOOOOOO", getRow(3, "00:05:00"))
-        // 10 mins -> 2 lamps (YY)
         assertEquals("YYOOOOOOOOO", getRow(3, "00:10:00"))
     }
 
     @Test
     fun `convert returns correct 5-minute row for 16 to 29 minutes`() {
-        // 20 mins -> 4 lamps (YYRY)
         assertEquals("YYRYOOOOOOO", getRow(3, "00:20:00"))
-        // 25 mins -> 5 lamps (YYRYY)
         assertEquals("YYRYYOOOOOO", getRow(3, "00:25:00"))
     }
 
     @Test
     fun `convert returns correct 5-minute row for 30 minute half (Second Red)`() {
-        // 30 mins -> 6 lamps (YYRYYR) - 6th is Red
         assertEquals("YYRYYROOOOO", getRow(3, "00:30:00"))
     }
 
     @Test
     fun `convert returns correct 5-minute row for 35 to 44 minutes`() {
-        // 35 mins -> 7 lamps (YYRYYRY)
         assertEquals("YYRYYRYOOOO", getRow(3, "00:35:00"))
-        // 40 mins -> 8 lamps (YYRYYRYY)
         assertEquals("YYRYYRYYOOO", getRow(3, "00:40:00"))
     }
 
     @Test
     fun `convert returns correct 5-minute row for 45 minute quarter (Third Red)`() {
-        // 45 mins -> 9 lamps (YYRYYRYYR) - 9th is Red
         assertEquals("YYRYYRYYROO", getRow(3, "00:45:00"))
     }
 
     @Test
     fun `convert returns correct 5-minute row for 50 to 59 minutes (Full or almost full)`() {
-        // 50 mins -> 10 lamps (YYRYYRYYRY)
         assertEquals("YYRYYRYYRYO", getRow(3, "00:50:00"))
-        // 55 mins -> 11 lamps (YYRYYRYYRYY) - Full
         assertEquals("YYRYYRYYRYY", getRow(3, "00:55:00"))
     }
 
-    // --- ROW 4: ONE MINUTE ROW (Bottom Yellow Row) ---
-    // Logic: Remainder of minutes % 5. Max 4 lamps. All Yellow (Y).
-
     @Test
     fun `convert returns correct 1-minute row for exact multiples of 5`() {
-        // 0, 5, ... 55 mins -> Remainder 0
         assertEquals("OOOO", getRow(4, "00:00:00"))
         assertEquals("OOOO", getRow(4, "00:15:00"))
         assertEquals("OOOO", getRow(4, "00:30:00"))
@@ -169,33 +136,27 @@ class BerlinClockConverterTest {
 
     @Test
     fun `convert returns correct 1-minute row for remainder 1`() {
-        // 1, 6, 11... mins
         assertEquals("YOOO", getRow(4, "00:01:00"))
         assertEquals("YOOO", getRow(4, "00:06:00"))
     }
 
     @Test
     fun `convert returns correct 1-minute row for remainder 2`() {
-        // 2, 7, 12... mins
         assertEquals("YYOO", getRow(4, "00:02:00"))
         assertEquals("YYOO", getRow(4, "00:07:00"))
     }
 
     @Test
     fun `convert returns correct 1-minute row for remainder 3`() {
-        // 3, 8, 13... mins
         assertEquals("YYYO", getRow(4, "00:03:00"))
         assertEquals("YYYO", getRow(4, "00:08:00"))
     }
 
     @Test
     fun `convert returns correct 1-minute row for remainder 4`() {
-        // 4, 9, 14... mins
         assertEquals("YYYY", getRow(4, "00:04:00"))
         assertEquals("YYYY", getRow(4, "00:59:00"))
     }
-
-    // --- HELPER FUNCTION ---
     private fun getRow(index: Int, time: String): String {
         val output = converter.convert(time)
         val rows = output.split("\n")

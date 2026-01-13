@@ -3,8 +3,6 @@ import kotlin.test.assertEquals
 import org.junit.Test
 
 class UiColorMapperTest {
-    // We test the logic that maps 'R' -> Red, 'Y' -> Yellow, 'O' -> DarkGray
-
     @Test
     fun `should map 'R' character to RED color`() {
         val input = "RRRR"
@@ -45,7 +43,6 @@ class UiColorMapperTest {
 
     @Test
     fun `should map mixed valid string (R, Y, O) correctly`() {
-        // 5-minute row pattern: Yellow, Yellow, Red, Off
         val input = "YYRO"
         val expected = listOf(
             BerlinColor.YELLOW,
@@ -59,7 +56,6 @@ class UiColorMapperTest {
 
     @Test
     fun `should map complex long pattern correctly`() {
-        // Full 11-lamp row: YYR YYR YYR YY
         val input = "YYRYYRYYRYY"
         val expected = listOf(
             BerlinColor.YELLOW, BerlinColor.YELLOW, BerlinColor.RED,
@@ -102,13 +98,12 @@ class UiColorMapperTest {
 
     @Test
     fun `should be case-sensitive (lowercase maps to OFF)`() {
-        // Unless logic changes to ignoreCase, strict mapping requires uppercase
         val input = "rRyY"
         val expected = listOf(
-            BerlinColor.OFF,    // r -> OFF
-            BerlinColor.RED,    // R -> RED
-            BerlinColor.OFF,    // y -> OFF
-            BerlinColor.YELLOW  // Y -> YELLOW
+            BerlinColor.OFF,
+            BerlinColor.RED,
+            BerlinColor.OFF,
+            BerlinColor.YELLOW
         )
 
         assertEquals(expected, UiColorMapper.map(input))
