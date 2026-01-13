@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.example.berlinclockkataandroid.MainDispatcherRule
 import com.example.berlinclockkataandroid.domain.BerlinClockConverter
 import com.example.berlinclockkataandroid.domain.TimeProvider
+import com.example.berlinclockkataandroid.ui.clock.viewmodel.BerlinClockViewModel
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -40,7 +41,7 @@ class BerlinClockViewModelTest {
     fun `updateClock updates state correctly`() = runTest {
         viewModel = BerlinClockViewModel(timeProvider, converter)
         val testTime = LocalTime.of(12, 56, 1)
-        val validTime = "12:56:01"
+        val validTime = testTime.toString()
         val expectedOutput = "O\nRROO\nRROO\nYYRYYRYYRYY\nYOOO"
         every { converter.convert(validTime) } returns expectedOutput
 

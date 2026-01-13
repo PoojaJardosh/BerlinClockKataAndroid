@@ -1,4 +1,6 @@
-package com.example.berlinclockkataandroid.presentation.mapper
+package com.example.berlinclockkataandroid.ui.clock.mapper
+
+import com.example.berlinclockkataandroid.ui.mapper.BerlinColor
 
 object UiColorMapper {
     fun map(pattern: String): List<BerlinColor> {

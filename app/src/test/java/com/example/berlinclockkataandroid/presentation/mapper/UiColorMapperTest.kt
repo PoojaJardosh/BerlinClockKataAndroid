@@ -1,4 +1,6 @@
 package com.example.berlinclockkataandroid.presentation.mapper
+import com.example.berlinclockkataandroid.ui.mapper.BerlinColor
+import com.example.berlinclockkataandroid.ui.clock.mapper.UiColorMapper
 import kotlin.test.assertEquals
 import org.junit.Test
 

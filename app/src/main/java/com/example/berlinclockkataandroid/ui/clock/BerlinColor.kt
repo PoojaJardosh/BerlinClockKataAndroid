@@ -1,4 +1,4 @@
-package com.example.berlinclockkataandroid.presentation.mapper
+package com.example.berlinclockkataandroid.ui.mapper
 
 /**
 *Lamp colors.

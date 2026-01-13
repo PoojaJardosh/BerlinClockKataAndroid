@@ -1,4 +1,4 @@
-package com.example.berlinclockkataandroid.presentation
+package com.example.berlinclockkataandroid.ui.clock
 
 data class BerlinClockState(
     val secondsLamp: String = "O",

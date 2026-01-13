@@ -1,10 +1,10 @@
-package com.example.berlinclockkataandroid.presentation.viewmodel
+package com.example.berlinclockkataandroid.ui.clock.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.berlinclockkataandroid.domain.BerlinClockConverter
 import com.example.berlinclockkataandroid.domain.TimeProvider
-import com.example.berlinclockkataandroid.presentation.BerlinClockState
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

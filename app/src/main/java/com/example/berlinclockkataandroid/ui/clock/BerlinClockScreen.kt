@@ -13,9 +13,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.berlinclockkataandroid.presentation.mapper.BerlinColor
-import com.example.berlinclockkataandroid.presentation.mapper.UiColorMapper
-import com.example.berlinclockkataandroid.presentation.viewmodel.BerlinClockViewModel
+import com.example.berlinclockkataandroid.ui.mapper.BerlinColor
+import com.example.berlinclockkataandroid.ui.clock.mapper.UiColorMapper
+import com.example.berlinclockkataandroid.ui.clock.viewmodel.BerlinClockViewModel
 
 fun BerlinColor.toComposeColor(): Color {
     return when (this) {
