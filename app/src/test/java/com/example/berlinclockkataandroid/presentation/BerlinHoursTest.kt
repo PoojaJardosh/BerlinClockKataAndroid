@@ -31,6 +31,17 @@ class BerlinHoursTest {
             )
         }
     }
+    @Test
+    fun `getFiveHourRow - 2 lamps ON (Hours 10-14)`() {
+        val testCases = listOf(10, 11, 12, 13, 14)
+
+        testCases.forEach { hour ->
+            assertLamps(
+                actualLamps = berlinHours.getFiveHourRow(hour),
+                expectedRedCount = 2,
+            )
+        }
+    }
 
     private fun assertLamps(actualLamps: List<Lamp>, expectedRedCount: Int) {
         val expectedLamps = List(4) { index ->
