@@ -50,8 +50,19 @@ class BerlinMinutesTest {
         assertEquals(BerlinColor.YELLOW, lamps[10].color)
     }
 
+    @Test
+    fun `getSingleMinuteRow handles 0 remainder`() {
+        assertSingleMinuteRow(berlinMinutes.getSingleMinuteRow(0), 0)
+        assertSingleMinuteRow(berlinMinutes.getSingleMinuteRow(5), 0)
+    }
+
     private fun assertFiveMinuteRow(lamps: List<Lamp>, onCount: Int) {
         assertEquals(11, lamps.size)
         assertEquals(onCount, lamps.count { it.color != BerlinColor.OFF })
+    }
+    private fun assertSingleMinuteRow(lamps: List<Lamp>, onCount: Int) {
+        assertEquals(4, lamps.size)
+        val actualOn = lamps.count { it.color == BerlinColor.YELLOW }
+        assertEquals(onCount, actualOn)
     }
 }
