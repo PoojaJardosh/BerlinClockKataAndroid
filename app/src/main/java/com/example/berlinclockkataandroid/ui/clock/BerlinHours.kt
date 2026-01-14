@@ -14,4 +14,14 @@ class BerlinHours @Inject constructor() {
             }
         }
     }
+    fun getSingleHourRow(hours: Int): List<Lamp> {
+        val onLampsCount = hours % 5
+        return List(4) { index ->
+            if (index < onLampsCount) {
+                Lamp(BerlinColor.RED)
+            } else {
+                Lamp(BerlinColor.OFF)
+            }
+        }
+    }
 }
