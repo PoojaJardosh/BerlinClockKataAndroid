@@ -28,4 +28,9 @@ class BerlinSecondsTest {
     fun `convert handles minimum second (0)`() {
         assertEquals(BerlinColor.YELLOW, berlinSeconds.convert(0).color)
     }
+
+    @Test
+    fun `convert handles maximum second (59)`() {
+        assertEquals(BerlinColor.OFF, berlinSeconds.convert(59).color)
+    }
 }
