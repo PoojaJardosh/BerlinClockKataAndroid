@@ -27,6 +27,17 @@ class BerlinMinutesTest {
         assertEquals(BerlinColor.OFF, lamps10[2].color)
     }
 
+    @Test
+    fun `getFiveMinuteRow handles Quarter Reds (15, 30, 45 mins)`() {
+        val lamps15 = berlinMinutes.getFiveMinuteRow(15)
+        assertEquals(BerlinColor.RED, lamps15[2].color)
+        val lamps30 = berlinMinutes.getFiveMinuteRow(30)
+        assertEquals(BerlinColor.RED, lamps30[2].color)
+        assertEquals(BerlinColor.RED, lamps30[5].color)
+        val lamps45 = berlinMinutes.getFiveMinuteRow(45)
+        assertEquals(BerlinColor.RED, lamps45[8].color) // 9th
+    }
+
     private fun assertFiveMinuteRow(lamps: List<Lamp>, onCount: Int) {
         assertEquals(11, lamps.size)
         assertEquals(onCount, lamps.count { it.color != BerlinColor.OFF })
