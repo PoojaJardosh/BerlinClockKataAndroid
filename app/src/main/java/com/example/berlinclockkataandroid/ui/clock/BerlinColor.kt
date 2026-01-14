@@ -8,3 +8,5 @@ enum class BerlinColor {
     YELLOW,
     OFF
 }
+
+data class Lamp(val color: BerlinColor)
