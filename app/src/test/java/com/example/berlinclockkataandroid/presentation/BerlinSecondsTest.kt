@@ -1,7 +1,7 @@
-package com.example.berlinclockkataandroid
+package com.example.berlinclockkataandroid.presentation
 
-import com.example.berlinclockkataandroid.ui.clock.BerlinSeconds
 import com.example.berlinclockkataandroid.ui.clock.BerlinColor
+import com.example.berlinclockkataandroid.ui.clock.BerlinSeconds
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
