@@ -38,6 +38,18 @@ class BerlinMinutesTest {
         assertEquals(BerlinColor.RED, lamps45[8].color) // 9th
     }
 
+    @Test
+    fun `getFiveMinuteRow handles Max Boundary (55+ mins)`() {
+        val lamps = berlinMinutes.getFiveMinuteRow(55)
+        assertEquals(11, lamps.filter { it.color != BerlinColor.OFF }.size)
+
+        assertEquals(BerlinColor.RED, lamps[2].color)
+        assertEquals(BerlinColor.RED, lamps[5].color)
+        assertEquals(BerlinColor.RED, lamps[8].color)
+
+        assertEquals(BerlinColor.YELLOW, lamps[10].color)
+    }
+
     private fun assertFiveMinuteRow(lamps: List<Lamp>, onCount: Int) {
         assertEquals(11, lamps.size)
         assertEquals(onCount, lamps.count { it.color != BerlinColor.OFF })
