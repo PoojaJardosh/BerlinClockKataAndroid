@@ -56,6 +56,14 @@ class BerlinMinutesTest {
         assertSingleMinuteRow(berlinMinutes.getSingleMinuteRow(5), 0)
     }
 
+    @Test
+    fun `getSingleMinuteRow handles 1 to 4 remainders`() {
+        assertSingleMinuteRow(berlinMinutes.getSingleMinuteRow(1), 1)
+        assertSingleMinuteRow(berlinMinutes.getSingleMinuteRow(12), 2)
+        assertSingleMinuteRow(berlinMinutes.getSingleMinuteRow(33), 3)
+        assertSingleMinuteRow(berlinMinutes.getSingleMinuteRow(59), 4)
+    }
+
     private fun assertFiveMinuteRow(lamps: List<Lamp>, onCount: Int) {
         assertEquals(11, lamps.size)
         assertEquals(onCount, lamps.count { it.color != BerlinColor.OFF })
