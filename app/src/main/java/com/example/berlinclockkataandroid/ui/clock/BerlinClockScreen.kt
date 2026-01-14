@@ -13,7 +13,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.berlinclockkataandroid.ui.mapper.BerlinColor
 import com.example.berlinclockkataandroid.ui.clock.mapper.UiColorMapper
 import com.example.berlinclockkataandroid.ui.clock.viewmodel.BerlinClockViewModel
 
