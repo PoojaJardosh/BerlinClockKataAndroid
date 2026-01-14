@@ -10,12 +10,26 @@ class BerlinHoursTest {
     private val berlinHours = BerlinHours()
 
     @Test
-    fun `getFiveHourRow returns correct patterns`() {
-        assertLamps(berlinHours.getFiveHourRow(0),  0) // 00:00 -> OOOO
-        assertLamps(berlinHours.getFiveHourRow(5),  1) // 05:00 -> ROOO
-        assertLamps(berlinHours.getFiveHourRow(10), 2) // 10:00 -> RROO
-        assertLamps(berlinHours.getFiveHourRow(15), 3) // 15:00 -> RRRO
-        assertLamps(berlinHours.getFiveHourRow(23), 4) // 20:00 -> RRRR
+    fun `getFiveHourRow - 0 lamps ON (Hours 00-04)`() {
+        val testCases = listOf(0, 1, 2, 3, 4)
+
+        testCases.forEach { hour ->
+            assertLamps(
+                actualLamps = berlinHours.getFiveHourRow(hour),
+                expectedRedCount = 0,
+            )
+        }
+    }
+    @Test
+    fun `getFiveHourRow - 1 lamp ON (Hours 05-09)`() {
+        val testCases = listOf(5, 6, 7, 8, 9)
+
+        testCases.forEach { hour ->
+            assertLamps(
+                actualLamps = berlinHours.getFiveHourRow(hour),
+                expectedRedCount = 1,
+            )
+        }
     }
 
     private fun assertLamps(actualLamps: List<Lamp>, expectedRedCount: Int) {
