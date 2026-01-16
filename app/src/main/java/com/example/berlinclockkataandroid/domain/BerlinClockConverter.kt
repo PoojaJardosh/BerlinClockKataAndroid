@@ -1,5 +1,14 @@
 package com.example.berlinclockkataandroid.domain
 
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.DIGITAL_TIME_PATTERN
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.FIVE_HOURS_LAMP_COUNT
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.FIVE_MINUTES_LAMP_COUNT
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.HOURS_PER_FIVE_HOUR_LAMP
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.MINUTES_PER_FIVE_MINUTE_LAMP
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.QUARTER_INDICATOR_INTERVAL
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.SECONDS_BLINK_INTERVAL
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.SINGLE_HOUR_LAMP_COUNT
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.SINGLE_MINUTE_LAMP_COUNT
 import com.example.berlinclockkataandroid.ui.clock.BerlinClockState
 import com.example.berlinclockkataandroid.ui.clock.BerlinHours
 import com.example.berlinclockkataandroid.ui.clock.BerlinMinutes
@@ -21,33 +30,30 @@ class BerlinClockConverter @Inject constructor(
             oneHourRowLamps = berlinHours.getSingleHourRow(time.hour),
             fiveMinuteRowLamps = berlinMinutes.getFiveMinuteRow(time.minute),
             oneMinuteRowLamps = berlinMinutes.getSingleMinuteRow(time.minute),
-            digitalTime =  time.format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+            digitalTime =  time.format(DateTimeFormatter.ofPattern(DIGITAL_TIME_PATTERN)),
             birlinClockString = convert(time)
         )
     }
     fun convert(time: LocalTime): String {
-        val parts = time.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
-            .split(":").map { it.toInt() }
-        val hours = parts[0]
-        val minutes = parts[1]
-        val seconds = parts[2]
+        val hours = time.hour
+        val minutes = time.minute
+        val seconds = time.second
 
         return buildString {
-            append(if (seconds % 2 == 0) "Y" else "O").append("\n")
-            append(generateRow(hours / 5, 4, 'R')).append("\n")
-            append(generateRow(hours % 5, 4, 'R')).append("\n")
-            append(generateFiveMinuteRow(minutes / 5)).append("\n")
-            append(generateRow(minutes % 5, 4, 'Y'))
+            append(if (seconds % SECONDS_BLINK_INTERVAL == 0) "Y" else "O").append("\n")
+            append(generateRow(hours / HOURS_PER_FIVE_HOUR_LAMP, FIVE_HOURS_LAMP_COUNT, 'R')).append("\n")
+            append(generateRow(hours % HOURS_PER_FIVE_HOUR_LAMP, SINGLE_HOUR_LAMP_COUNT, 'R')).append("\n")
+            append(generateFiveMinuteRow(minutes / MINUTES_PER_FIVE_MINUTE_LAMP)).append("\n")
+            append(generateRow(minutes % MINUTES_PER_FIVE_MINUTE_LAMP, SINGLE_MINUTE_LAMP_COUNT, 'Y'))
         }
     }
     private fun generateRow(litCount: Int, totalLamps: Int, onChar: Char): String {
         return onChar.toString().repeat(litCount) + "O".repeat(totalLamps - litCount)
     }
     private fun generateFiveMinuteRow(litCount: Int): String {
-        val totalLamps = 11
-        return (1..totalLamps).joinToString("") { index ->
+        return (1..FIVE_MINUTES_LAMP_COUNT).joinToString("") { index ->
             if (index <= litCount) {
-                if (index % 3 == 0) "R" else "Y"
+                if (index % QUARTER_INDICATOR_INTERVAL == 0) "R" else "Y"
             } else {
                 "O"
             }

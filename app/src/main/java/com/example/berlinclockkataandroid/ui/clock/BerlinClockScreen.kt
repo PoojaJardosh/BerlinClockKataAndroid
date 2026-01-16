@@ -60,7 +60,7 @@ fun BerlinClockScreen(
     viewModel: BerlinClockViewModel = hiltViewModel(),
 ){
     val clockState by viewModel.clockState.collectAsState()
-    clockState?.let { clock ->
+    clockState.let { clock ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
