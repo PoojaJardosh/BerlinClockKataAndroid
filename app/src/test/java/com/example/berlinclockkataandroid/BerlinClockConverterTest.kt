@@ -1,7 +1,6 @@
 package com.example.berlinclockkataandroid
 
 import com.example.berlinclockkataandroid.domain.BerlinClockConverter
-import com.example.berlinclockkataandroid.ui.clock.BerlinClockState
 import com.example.berlinclockkataandroid.ui.clock.BerlinColor
 import com.example.berlinclockkataandroid.ui.clock.BerlinHours
 import com.example.berlinclockkataandroid.ui.clock.BerlinMinutes
@@ -75,6 +74,25 @@ class BerlinClockConverterTest {
         assertEquals("00:00:00", result.digitalTime)
         verify { berlinHours.getFiveHourRow(0) }
         verify { berlinMinutes.getFiveMinuteRow(0) }
+    }
+
+    @Test
+    fun `calculate handles End of Day boundary (23-59-59) correctly`() {
+        val testTime = LocalTime.of(23, 59, 59)
+        val mockLamp = Lamp(BerlinColor.RED)
+        val mockList = listOf(Lamp(BerlinColor.RED))
+
+        every { berlinSeconds.convert(59) } returns mockLamp
+        every { berlinHours.getFiveHourRow(23) } returns mockList
+        every { berlinHours.getSingleHourRow(23) } returns mockList
+        every { berlinMinutes.getFiveMinuteRow(59) } returns mockList
+        every { berlinMinutes.getSingleMinuteRow(59) } returns mockList
+
+        val result = converter.calculate(testTime)
+
+        assertEquals("23:59:59", result.digitalTime)
+        verify { berlinSeconds.convert(59) }
+        verify { berlinHours.getFiveHourRow(23) }
     }
 
     @Test
