@@ -59,6 +59,25 @@ class BerlinClockConverterTest {
     }
 
     @Test
+    fun `calculate handles Midnight boundary (00-00-00) correctly`() {
+        val testTime = LocalTime.MIDNIGHT
+        val mockOffLamp = Lamp(BerlinColor.OFF)
+        val mockOffList = emptyList<Lamp>()
+
+        every { berlinSeconds.convert(0) } returns mockOffLamp
+        every { berlinHours.getFiveHourRow(0) } returns mockOffList
+        every { berlinHours.getSingleHourRow(0) } returns mockOffList
+        every { berlinMinutes.getFiveMinuteRow(0) } returns mockOffList
+        every { berlinMinutes.getSingleMinuteRow(0) } returns mockOffList
+
+        val result = converter.calculate(testTime)
+
+        assertEquals("00:00:00", result.digitalTime)
+        verify { berlinHours.getFiveHourRow(0) }
+        verify { berlinMinutes.getFiveMinuteRow(0) }
+    }
+
+    @Test
     fun `convert returns Y for even seconds (Midnight)`() {
         val output = converter.convert(LocalTime.of(0,0,0))
         assertEquals("Y", output.substringBefore("\n"))
