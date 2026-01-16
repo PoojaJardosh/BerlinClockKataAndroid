@@ -11,6 +11,17 @@ object BerlinClockConstants {
     const val QUARTER_INDICATOR_INTERVAL = 3
 
     const val SECONDS_BLINK_INTERVAL = 2
+    const val TICK_DELAY_MS = 1000L
 
     const val DIGITAL_TIME_PATTERN = "HH:mm:ss"
+
+    const val LAMP_HEIGHT = 32
+    const val SECONDS_CIRCLE_SIZE = 56
+    const val ROW_SPACING = 24
+    const val SCREEN_PADDING = 16
+    const val CORNER_RADIUS = 4
+    const val LAMP_BOX_PADDING = 2
+    const val BOX_BORDER_WIDTH = 1
+    const val SECONDS_CIRCLE_BORDER_WIDTH = 2
+
 }

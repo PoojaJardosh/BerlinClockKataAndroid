@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.berlinclockkataandroid.domain.BerlinClockConverter
 import com.example.berlinclockkataandroid.domain.TimeProvider
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.TICK_DELAY_MS
 import com.example.berlinclockkataandroid.ui.clock.BerlinClockState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -30,7 +31,7 @@ class BerlinClockViewModel @Inject constructor(
     private fun startTicking() {
         viewModelScope.launch {
             while (isActive) {
-                delay(1000L)
+                delay(TICK_DELAY_MS)
                 _clockState.update {
                     converter.calculate(timeProvider.getCurrentTime())
                 }

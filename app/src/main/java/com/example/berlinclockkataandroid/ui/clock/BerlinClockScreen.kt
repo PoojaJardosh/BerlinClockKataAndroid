@@ -13,6 +13,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.BOX_BORDER_WIDTH
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.CORNER_RADIUS
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.LAMP_BOX_PADDING
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.LAMP_HEIGHT
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.ROW_SPACING
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.SCREEN_PADDING
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.SECONDS_CIRCLE_BORDER_WIDTH
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockConstants.SECONDS_CIRCLE_SIZE
 import com.example.berlinclockkataandroid.ui.clock.viewmodel.BerlinClockViewModel
 
 fun BerlinColor.toComposeColor(): Color {
@@ -27,15 +35,15 @@ fun BerlinColor.toComposeColor(): Color {
 fun RowScope.LampBox(color: BerlinColor, weight: Float) {
     Box(
         modifier = Modifier
-            .height(32.dp)
+            .height(LAMP_HEIGHT.dp)
             .weight(weight)
-            .padding(horizontal = 2.dp)
-            .clip(RoundedCornerShape(4.dp))
+            .padding(horizontal = LAMP_BOX_PADDING.dp)
+            .clip(RoundedCornerShape(CORNER_RADIUS.dp))
             .background(color.toComposeColor())
             .border(
-                width = 1.dp,
+                width = BOX_BORDER_WIDTH.dp,
                 color = Color.DarkGray,
-                shape = RoundedCornerShape(4.dp)
+                shape = RoundedCornerShape(CORNER_RADIUS.dp)
             )
     )
 }
@@ -44,11 +52,11 @@ fun RowScope.LampBox(color: BerlinColor, weight: Float) {
 fun SecondsCircle(lamp: Lamp) {
     Box(
         modifier = Modifier
-            .size(56.dp)
+            .size(SECONDS_CIRCLE_SIZE.dp)
             .clip(CircleShape)
             .background(lamp.color.toComposeColor())
             .border(
-                width = 2.dp,
+                width = SECONDS_CIRCLE_BORDER_WIDTH.dp,
                 color = Color.DarkGray,
                 shape = CircleShape
             )
@@ -64,25 +72,25 @@ fun BerlinClockScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(SCREEN_PADDING.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             Text(
                 text = clock.digitalTime,
                 color = Color.White,
-                modifier = Modifier.padding(bottom = 24.dp)
+                modifier = Modifier.padding(bottom = ROW_SPACING.dp)
             )
             SecondsCircle(clock.secondsLamp)
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(ROW_SPACING.dp))
             LampRow(clock.fiveHourRowLamps)
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(ROW_SPACING.dp))
             LampRow(clock.oneHourRowLamps)
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(ROW_SPACING.dp))
             LampRow(clock.fiveMinuteRowLamps)
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(ROW_SPACING.dp))
             LampRow(clock.oneMinuteRowLamps)
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(ROW_SPACING.dp))
             Text(
                 text = clock.birlinClockString,
                 color = Color.White,
