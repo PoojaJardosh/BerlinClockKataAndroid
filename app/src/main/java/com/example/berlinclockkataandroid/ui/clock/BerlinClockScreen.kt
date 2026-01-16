@@ -13,7 +13,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.berlinclockkataandroid.ui.clock.mapper.UiColorMapper
 import com.example.berlinclockkataandroid.ui.clock.viewmodel.BerlinClockViewModel
 
 fun BerlinColor.toComposeColor(): Color {
@@ -25,71 +24,81 @@ fun BerlinColor.toComposeColor(): Color {
 }
 
 @Composable
-fun BerlinClockScreen(
-    viewModel: BerlinClockViewModel = hiltViewModel(),
-){
-    val state by viewModel.uiState.collectAsState()
-
-    Column(
+fun RowScope.LampBox(color: BerlinColor, weight: Float) {
+    Box(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = state.digitalTime,
-            color = Color.White,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
-        SecondsLamp(isOn = state.secondsLamp)
-        Spacer(modifier = Modifier.height(16.dp))
-        DynamicLampRow(pattern = state.fiveHourRow)
-        Spacer(modifier = Modifier.height(8.dp))
-        DynamicLampRow(pattern = state.oneHourRow)
-        Spacer(modifier = Modifier.height(8.dp))
-        DynamicLampRow(pattern = state.fiveMinuteRow)
-        Spacer(modifier = Modifier.height(8.dp))
-        DynamicLampRow(pattern = state.oneMinuteRow)
-
-        Spacer(modifier = Modifier.height(24.dp))
-        Text(text = state.birlinClockString,
-            color = Color.White,
-            style = MaterialTheme.typography.bodyLarge)
-    }
+            .height(32.dp)
+            .weight(weight)
+            .padding(horizontal = 2.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(color.toComposeColor())
+            .border(
+                width = 1.dp,
+                color = Color.DarkGray,
+                shape = RoundedCornerShape(4.dp)
+            )
+    )
 }
 
 @Composable
-fun DynamicLampRow(pattern: String) {
-    val colors = UiColorMapper.map(pattern)
+fun SecondsCircle(lamp: Lamp) {
+    Box(
+        modifier = Modifier
+            .size(56.dp)
+            .clip(CircleShape)
+            .background(lamp.color.toComposeColor())
+            .border(
+                width = 2.dp,
+                color = Color.DarkGray,
+                shape = CircleShape
+            )
+    )
+}
 
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        colors.forEach { berlinColor ->
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(40.dp)
-                    .padding(4.dp)
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(berlinColor.toComposeColor())
-                    .border(1.dp, Color.Black, RoundedCornerShape(4.dp))
+@Composable
+fun BerlinClockScreen(
+    viewModel: BerlinClockViewModel = hiltViewModel(),
+){
+    val clockState by viewModel.clockState.collectAsState()
+    clockState?.let { clock ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = clock.digitalTime,
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 24.dp)
+            )
+            SecondsCircle(clock.secondsLamp)
+            Spacer(modifier = Modifier.height(24.dp))
+            LampRow(clock.fiveHourRowLamps)
+            Spacer(modifier = Modifier.height(24.dp))
+            LampRow(clock.oneHourRowLamps)
+            Spacer(modifier = Modifier.height(24.dp))
+            LampRow(clock.fiveMinuteRowLamps)
+            Spacer(modifier = Modifier.height(24.dp))
+            LampRow(clock.oneMinuteRowLamps)
+            Spacer(modifier = Modifier.height(24.dp))
+            Text(
+                text = clock.birlinClockString,
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }
 }
-
 @Composable
-fun SecondsLamp(isOn: String) {
-    val color = if (isOn == "Y") Color.Yellow else Color.Gray
-    Box(
-        modifier = Modifier
-            .size(60.dp)
-            .clip(CircleShape)
-            .background(color)
-            .border(2.dp, Color.Black, CircleShape)
-    )
+fun LampRow(lamps: List<Lamp>) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        lamps.forEach { lamp ->
+            LampBox(color = lamp.color, weight = 1f)
+        }
+    }
 }
-

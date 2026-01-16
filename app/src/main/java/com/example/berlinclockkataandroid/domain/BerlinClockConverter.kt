@@ -1,18 +1,43 @@
 package com.example.berlinclockkataandroid.domain
 
-class BerlinClockConverter {
-    fun convert(time: String): String {
-        val parts = time.split(":").map { it.toInt() }
-        val h = parts[0]
-        val m = parts[1]
-        val s = parts[2]
+import com.example.berlinclockkataandroid.ui.clock.BerlinClockState
+import com.example.berlinclockkataandroid.ui.clock.BerlinHours
+import com.example.berlinclockkataandroid.ui.clock.BerlinMinutes
+import com.example.berlinclockkataandroid.ui.clock.BerlinSeconds
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import javax.inject.Inject
+
+class BerlinClockConverter @Inject constructor(
+    private val berlinSeconds: BerlinSeconds,
+    private val berlinHours: BerlinHours,
+    private val berlinMinutes: BerlinMinutes
+){
+
+    fun calculate(time: LocalTime): BerlinClockState {
+        return BerlinClockState(
+            secondsLamp = berlinSeconds.convert(time.second),
+            fiveHourRowLamps = berlinHours.getFiveHourRow(time.hour),
+            oneHourRowLamps = berlinHours.getSingleHourRow(time.hour),
+            fiveMinuteRowLamps = berlinMinutes.getFiveMinuteRow(time.minute),
+            oneMinuteRowLamps = berlinMinutes.getSingleMinuteRow(time.minute),
+            digitalTime =  time.format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+            birlinClockString = convert(time)
+        )
+    }
+    fun convert(time: LocalTime): String {
+        val parts = time.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+            .split(":").map { it.toInt() }
+        val hours = parts[0]
+        val minutes = parts[1]
+        val seconds = parts[2]
 
         return buildString {
-            append(if (s % 2 == 0) "Y" else "O").append("\n")
-            append(generateRow(h / 5, 4, 'R')).append("\n")
-            append(generateRow(h % 5, 4, 'R')).append("\n")
-            append(generateFiveMinuteRow(m / 5)).append("\n")
-            append(generateRow(m % 5, 4, 'Y'))
+            append(if (seconds % 2 == 0) "Y" else "O").append("\n")
+            append(generateRow(hours / 5, 4, 'R')).append("\n")
+            append(generateRow(hours % 5, 4, 'R')).append("\n")
+            append(generateFiveMinuteRow(minutes / 5)).append("\n")
+            append(generateRow(minutes % 5, 4, 'Y'))
         }
     }
     private fun generateRow(litCount: Int, totalLamps: Int, onChar: Char): String {
