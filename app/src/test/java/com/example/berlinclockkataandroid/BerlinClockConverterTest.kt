@@ -96,6 +96,24 @@ class BerlinClockConverterTest {
     }
 
     @Test
+    fun `calculate formats Digital Time with leading zeros (Single digits)`() {
+        val testTime = LocalTime.of(1, 5, 9)
+
+        val mockLamp = mockk<Lamp>(relaxed = true)
+        val mockList = mockk<List<Lamp>>(relaxed = true)
+
+        every { berlinSeconds.convert(any()) } returns mockLamp
+        every { berlinHours.getFiveHourRow(any()) } returns mockList
+        every { berlinHours.getSingleHourRow(any()) } returns mockList
+        every { berlinMinutes.getFiveMinuteRow(any()) } returns mockList
+        every { berlinMinutes.getSingleMinuteRow(any()) } returns mockList
+
+        val result = converter.calculate(testTime)
+
+        assertEquals("01:05:09", result.digitalTime)
+    }
+
+    @Test
     fun `convert returns Y for even seconds (Midnight)`() {
         val output = converter.convert(LocalTime.of(0,0,0))
         assertEquals("Y", output.substringBefore("\n"))
