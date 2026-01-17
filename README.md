@@ -1,7 +1,8 @@
 # Berlin Clock Android App ⏰
 
-A modern Android application that converts 24-hour digital current time into the **Berlin Clock (Mengenlehreuhr)** format. Built with **Kotlin**, **Jetpack Compose**, and **Clean Architecture** principles.
+A modern Android application that converts 24-hour digital current time into the **Berlin Clock** format. Built with **Kotlin**, **Jetpack Compose**, and **MVVM** principles.
 
+<img width="200" height="500" alt="image" src="https://github.com/user-attachments/assets/ba10ac09-0ec3-4726-a516-0d943f365af5" />
 
 
 The clock is read from the top row to the bottom. 
@@ -53,21 +54,17 @@ This project follows the **MVVM (Model-View-ViewModel)** architectural pattern a
 ## 📂 Project Structure
 
 ```text
-com.example.berlinclockkataandroid
+com.example.berlinclock
 ├── di                  // Hilt Dependency Injection Modules
 ├── domain              // Business Logic (Pure Kotlin)
-│   ├── TimeProvider.kt
+│   ├── BerlinClockValidator.kt
 │   └── BerlinClockConverter.kt
-├── ui                  // Ui Layer (Compose)
-│   └── clock
-│       └── BerlinClockScreen.kt  
-└── Presentation        // Presentation Layer (ViewModel)
-│       ├── mapper
-│       │    ├── BerlinColor.kt
-│       │    └── UiColorMapper.kt
-│       ├── BerlinClockState.kt
-│       └── viewmodel
-│            └── BerlinClockViewModel.kt
+└── ui                  // Presentation Layer (Compose + MVVM)
+    └── clock
+        ├── BerlinClockActivity.kt
+        ├── BerlinClockScreen.kt
+        ├── BerlinClockViewModel.kt
+        └── BerlinClockUiState.kt
 └── data   
      └── RealTimeProviderImpl.kt
 
