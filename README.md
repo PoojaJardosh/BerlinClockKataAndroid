@@ -1,14 +1,42 @@
 # Berlin Clock Android App ⏰
 
-A modern Android application that converts 24-hour digital time into the **Berlin Clock (Mengenlehreuhr)** format. Built with **Kotlin**, **Jetpack Compose**, and **Clean Architecture** principles.
+A modern Android application that converts 24-hour digital current time into the **Berlin Clock (Mengenlehreuhr)** format. Built with **Kotlin**, **Jetpack Compose**, and **Clean Architecture** principles.
+
+
+
+The clock is read from the top row to the bottom. 
+
+The top row - 4 lamps - Yellow - Blinks every second and indicate yellow for even seconds ; Gray - Off
+The second row - 4 lamps - Red - Each lamp represents 5 Hours
+The third row - 4 lamps - Red - Each lamp represents 1 Hour
+The fourth row - 11 lamps - Red (Every third lamp) , Yellow (Rest lamps) - Each lamp represents five minutes
+THr fifth row - 4 lamps - Yellow - Each lamp represents one minute
+
+
+# Logic Overview
+The Berlin Clock logic is separated into two key domain classes:
+The core logic is handled by the `BerlinClockConverter` in the domain layer, which transforms `LocalTime` into a structured `BerlinClockState`.
+​
+ ### 1. Time Calculation
+ *   **Seconds:** `seconds % 2 == 0` determines the blinking state of the top yellow lamp.
+ *   **Hours:** 
+     *   **5-Hour Row:** `hours / 5` gives the number of lit red lamps.
+     *   **1-Hour Row:** `hours % 5` gives the number of lit red lamps in the second row.
+ *   **Minutes:**
+     *   **5-Minute Row:** `minutes / 5` gives the total lit lamps. Every 3rd lamp (index 3, 6, 9) is colored **Red** to indicate quarters (15, 30, 45 mins), while others are **Yellow**.
+     *   **1-Minute Row:** `minutes % 5` gives the number of lit yellow lamps in the final row.
+​
+ ### 2. Reactive Updates
+ The `BerlinClockViewModel` maintains a `StateFlow` that emits a new `BerlinClockState` every second. It uses `viewModelScope` and a coroutine loop to fetch the current time from `TimeProvider` and update the UI state continuously.
 
 ## 📱 Features
 
-* **Time Conversion:** Converts inputs like `12:56:01` into the correct Berlin Clock lamp representation in string.
-* **Input Validation:** Ensures strict adherence to the 24-hour `HH:mm:ss` format.
-* **State Management:** Handles UI states (Initial, Loading, Success, Error) reactively.
-* **Configuration Handling:** Preserves user input across screen rotations.
-* **UX Enhancements:** Auto-dismisses keyboard on action; scrollable output for smaller screens.
+*   **Live Clock Updates:** Synchronizes with the system time to provide real-time updates every second.
+*   **Modern Declarative UI:** Built entirely with **Jetpack Compose**, ensuring a smooth and reactive user experience.
+*   **Clean Architecture:** Follows a strict separation of concerns (Domain, UI, Presentation) for better maintainability and testability.
+*   **Reactive State Management:** Utilizes `StateFlow` and Coroutines to push time updates from the ViewModel to the UI layer efficiently.
+*   **Accurate Color Representation:** Implements the classic Berlin Clock color scheme (Yellow/Red) with specific logic for quarter-hour indicators.
+*   **High Testability:** Business logic is decoupled from the Android framework, allowing for comprehensive Unit Testing using TDD.
 
 ## 🛠 Tech Stack & Architecture
 
@@ -25,34 +53,24 @@ This project follows the **MVVM (Model-View-ViewModel)** architectural pattern a
 ## 📂 Project Structure
 
 ```text
-com.example.berlinclock
+com.example.berlinclockkataandroid
 ├── di                  // Hilt Dependency Injection Modules
 ├── domain              // Business Logic (Pure Kotlin)
-│   ├── BerlinClockValidator.kt
+│   ├── TimeProvider.kt
 │   └── BerlinClockConverter.kt
-└── ui                  // Presentation Layer (Compose + MVVM)
-    └── clock
-        ├── BerlinClockActivity.kt
-        ├── BerlinClockScreen.kt
-        ├── BerlinClockViewModel.kt
-        └── BerlinClockUiState.kt
+├── ui                  // Ui Layer (Compose)
+│   └── clock
+│       └── BerlinClockScreen.kt  
+└── Presentation        // Presentation Layer (ViewModel)
+│       ├── mapper
+│       │    ├── BerlinColor.kt
+│       │    └── UiColorMapper.kt
+│       ├── BerlinClockState.kt
+│       └── viewmodel
+│            └── BerlinClockViewModel.kt
+└── data   
+     └── RealTimeProviderImpl.kt
 
-## 🧪 Logic Overview
-The Berlin Clock logic is separated into two key domain classes:
-
-Validator: Verifies if the input string matches the HH:mm:ss regex pattern and logical time bounds (e.g., hours 00-23).
-
-Converter: Parses the time and generates the 5-row string representation:
-
-Row 1 (Seconds): Yellow lamp blinks every 2 seconds.
-
-Row 2 (5 Hours): Red lamps for every 5 hours.
-
-Row 3 (1 Hour): Red lamps for every 1 hour remainder.
-
-Row 4 (5 Minutes): Yellow/Red lamps for every 5 minutes.
-
-Row 5 (1 Minute): Yellow lamps for every 1 minute remainder.
 
 ## 🚀 How to Run
 Clone the repository:
